@@ -1,0 +1,165 @@
+{
+  "schemaVersion": 1,
+  "id": "acme.display",
+  "name": "Acme Display with Touchscreen",
+  "category": "Display",
+  "iconName": "tv",
+  "summary": "Example display module with a separate SPI touchscreen controller",
+  "pins": [
+    {
+      "label": "VCC",
+      "role": "power",
+      "note": "Module supply; check the hardware documentation"
+    },
+    {
+      "label": "GND",
+      "role": "ground"
+    },
+    {
+      "label": "CS",
+      "role": "output",
+      "mcu": {
+        "mode": "output",
+        "defaultHigh": true
+      },
+      "note": "Active-low chip select"
+    },
+    {
+      "label": "DC",
+      "role": "output",
+      "mcu": {
+        "mode": "output"
+      },
+      "note": "Command/data selection"
+    },
+    {
+      "label": "RST",
+      "role": "output",
+      "mcu": {
+        "mode": "output",
+        "defaultHigh": true
+      },
+      "note": "Active-low reset"
+    },
+    {
+      "label": "BL",
+      "role": "output",
+      "mcu": {
+        "mode": "output"
+      },
+      "note": "Backlight enable"
+    },
+    {
+      "label": "SCK",
+      "role": "output",
+      "mcu": {
+        "mode": "alternate"
+      }
+    },
+    {
+      "label": "MOSI",
+      "role": "output",
+      "mcu": {
+        "mode": "alternate"
+      }
+    },
+    {
+      "label": "T_CS",
+      "role": "output",
+      "mcu": {
+        "mode": "output",
+        "defaultHigh": true
+      },
+      "note": "Touch controller chip select"
+    },
+    {
+      "label": "T_SCK",
+      "role": "output",
+      "mcu": {
+        "mode": "alternate"
+      }
+    },
+    {
+      "label": "T_MOSI",
+      "role": "output",
+      "mcu": {
+        "mode": "alternate"
+      }
+    },
+    {
+      "label": "T_MISO",
+      "role": "input",
+      "mcu": {
+        "mode": "alternate"
+      }
+    },
+    {
+      "label": "T_IRQ",
+      "role": "input",
+      "mcu": {
+        "mode": "input"
+      },
+      "note": "Optional touch controller interrupt signal"
+    }
+  ],
+  "buses": [
+    {
+      "kind": "spi",
+      "name": "displaySpi",
+      "configs": [
+        {
+          "name": "default",
+          "params": {
+            "mode": "0",
+            "order": "MSB"
+          },
+          "rate": {
+            "minHz": 100000,
+            "targetHz": 1000000,
+            "maxHz": 4000000
+          },
+          "transport": "blocking"
+        }
+      ],
+      "assignments": {
+        "sck": "SCK",
+        "mosi": "MOSI"
+      }
+    },
+    {
+      "kind": "spi",
+      "name": "touchSpi",
+      "configs": [
+        {
+          "name": "default",
+          "params": {
+            "mode": "0",
+            "order": "MSB"
+          },
+          "rate": {
+            "minHz": 100000,
+            "targetHz": 500000,
+            "maxHz": 2000000
+          },
+          "transport": "blocking"
+        }
+      ],
+      "assignments": {
+        "cs": "T_CS",
+        "sck": "T_SCK",
+        "mosi": "T_MOSI",
+        "miso": "T_MISO",
+        "t_irq": "T_IRQ"
+      },
+      "optionalLines": [
+        "t_irq"
+      ]
+    }
+  ],
+  "codeSource": {
+    "kind": "git",
+    "url": "https://example.com/acme/drivers.git",
+    "tag": "1.0.0",
+    "product": "AcmeTouchDisplay"
+  }
+}
