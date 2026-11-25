@@ -1,15 +1,5 @@
 # cozy-data
 
-Versioned offline data bundles and availability reports for Cozy STM32.
+The driver manifest catalog for Cozy STM32. Driver source code remains in its authors' repositories.
 
-## Builder
-
-The builder is a host Swift executable for maintainers and GitHub Actions. It is not installed by Cozy users.
-
-Inspect the pinned inputs of a release manifest:
-
-```sh
-swift run cozy-data-builder inspect --release /path/to/release.json
-```
-
-The current command validates and prints the pinned MCU JSON, SVD and Embassy revisions. Bundle generation is added on top of the same manifest in the next increment.
+Vendors propose new or updated manifests through pull requests targeting `next`. After review and practical validation, maintainers promote approved changes through a separate branch and pull request targeting `main`.
